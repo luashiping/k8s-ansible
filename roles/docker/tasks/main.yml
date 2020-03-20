@@ -1,0 +1,35 @@
+- name: Config repo 
+  copy: src=docker-ce.repo dest=/etc/yum.repos.d
+
+- name: Install the necessary system tools 
+  yum: name={{ item }} state=present
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+    
+- name: Install docker-ce
+  yum: name={{ item }} state=present
+  with_items:
+    - docker-ce-{{ docker_version }}.el7.x86_64
+    - docker-ce-cli-{{ docker_version }}.el7.x86_64
+    - containerd.io
+
+- name: Create /etc/docker directory
+  file: path=/etc/docker state=directory
+
+- name: copy daemon.json
+  copy: src=daemon.json dest=/etc/docker/daemon.json
+
+- name: docker modify enforcing
+  lineinfile:
+    dest: /usr/lib/systemd/system/docker.service
+    regexp: '^ExecStart=/usr/bin/dockerd'
+    line: 'ExecStart=/usr/bin/dockerd'
+
+- name: Start docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+    daemon_reload: yes

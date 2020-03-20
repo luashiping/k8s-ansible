@@ -1,0 +1,23 @@
+- name: Config repo 
+  copy: src=kubernetes.repo dest=/etc/yum.repos.d
+
+- sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: '1'
+    reload: yes
+
+- sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    reload: yes
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Install kubelet kubeadm kubectl
+  yum: name={{ item }} state=present
+  with_items:
+    - kubelet-{{ kube_version }}
+    - kubeadm-{{ kube_version }}
+    - kubectl-{{ kube_version }}

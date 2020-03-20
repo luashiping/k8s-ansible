@@ -1,0 +1,14 @@
+{
+  "registry-mirrors": [
+    "https://registry.docker-cn.com",
+    "https://56p7806w.mirror.aliyuncs.com"
+  ],
+  "insecure-registries": [
+    "registry.cn-hangzhou.aliyuncs.com"
+  ],
+  "hosts": [
+    "unix:///var/run/docker.sock"
+  ],
+  "graph":"/zhilun/docker/",
+  "exec-opts": ["native.cgroupdriver=systemd"]
+}

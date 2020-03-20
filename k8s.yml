@@ -1,0 +1,14 @@
+- hosts: k8smaster
+  become: yes
+  roles:
+    - docker
+    - { role: kubernetes/common }
+    - { role: kubernetes/master }
+
+- hosts: k8sworker
+  gather_facts: yes
+  become: yes
+  roles:
+    - docker
+    - { role: kubernetes/common }
+    - { role: kubernetes/worker }

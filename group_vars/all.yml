@@ -1,0 +1,16 @@
+---
+kube_version: "1.14.10"
+token: "b0f7b8.8d1767876297d85c"
+
+service_cidr: "10.96.0.0/12"
+pod_network_cidr: "10.244.0.0/16"
+
+# 添加kubeadm init时候其他可选参数
+kubeadm_opts: "--image-repository=registry.aliyuncs.com/google_containers"
+
+kubeadmin_config: "/etc/kubernetes/admin.conf"
+
+# k8s使用何种网络组件('flannel', 'calico'等等)
+network: "flannel"
+
+network_dir: "/etc/kubernetes/network"
